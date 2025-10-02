@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Catàleg Perfums</title>
+  <style>
+    body{font-family:Arial, sans-serif;background:#fafafa;margin:0;padding:20px;color:#222;}
+    h1{margin-bottom:20px;}
+    #search{padding:10px;width:250px;border-radius:8px;border:1px solid #ccc;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
+    .card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:12px;display:flex;flex-direction:column;gap:10px;}
+    .thumb{height:180px;background:#eee;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .thumb img{width:100%;height:100%;object-fit:cover;}
+    .name{font-weight:bold;}
+    .meta{font-size:0.9em;color:#555;}
+    .price{font-size:1.1em;color:#0a7;}
+    .notice-banner {
+  background: linear-gradient(90deg, #ffce70, #ffb347);
+  color: #8a5a00;
+  text-align: center; /* centra el text */
+  padding: 20px 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 0 0 12px 12px; /* cantonades arrodonides només a baix */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 0;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Catálogo de Perfumes</h1>
+  <input type="search" id="search" placeholder="Cerca perfum..."/>
+  <div id="grid" class="grid"></div>
+
+  <script>
+    const products = [
+      {name:"KENZOHONE EAU DE TOILETTE INTENSE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"HUGO BOSS THE SCENT FOR HER EAU DE PARFUM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"ARMANI CODE PROFUMO", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"VALENTINO OUMO INTENSE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"JEAN PAUL GAULTIER CLASSIQUE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"JEAN PAUL GAULTIER CLASSIQUE (2)", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"GUCCI GUILTY LOVE EDITION", image:"", price:"XX €", quantity:"90 ml", gender:""},
+      {name:"PARFUMS DE MARLY PARIS LAYTON ROYAL ESSENCE", image:"", price:"XX €", quantity:"125 ml", gender:""},
+      {name:"NOMADE EAU DE PARFUM CHLOÉ", image:"", price:"XX €", quantity:"75 ml", gender:""},
+
+      {name:"SÍ GIORGI ARMANI EAU DE PARFUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"PRADA PARADOXE VIRTUAL FLOWER", image:"", price:"XX €", quantity:"90 ml", gender:""},
+      {name:"DIOR ADDICT", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"ONE MILLION ROYAL", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"FLORA BY GUCCI GORGEOUS GARDENIA", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"BLACK OPIUM OVER RED", image:"", price:"XX €", quantity:"90 ml", gender:""},
+
+      {name:"CAROLINA HERRERA BAD BOY SUPERSTAR", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"ARMANI CODE PARFUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"VICTORIA SECRET BOMBSHELL", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"VERSACE BRIGHT CRISTAL ABSOLUTE", image:"", price:"XX €", quantity:"36 ml", gender:""},
+      {name:"GUCCI BLOOM PROFUMO DI FLORI", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"VICTORIA'S SECRET BOMBSHELL PARADISE", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"HUGO BOSS BOTTLED NIGHT", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"GOOD GIRL VERY", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"GIORGIO ARMANI ACQUA DI GIOIA EAU PARFUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"ARIANA GRANDE SWEET LIKE CANDY (EI)", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"JEAN PAUL GAULTIER LA BELLE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"PACO RABANNE FAME", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"INVICTUS PARFUM GOLD EDITION", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"212 VIP ROSÉ", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"DIOR SAUVAGE EAU DE TOILETTE", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"CAROLINA HERRERA GOOD GIRL PINK", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"BLACK OPIUM", image:"", price:"XX €", quantity:"90 ml", gender:""},
+      {name:"GIORGIO ARMANI ACQUA DI GIÒ PROFUMO PARFUM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"BECAUSE ITS YOU EMPORIO ARMANI", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"STRONGER WITH YOU INTENSELY EAU DE PARFUM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"ACQUA DI GIO EAU DE PARFUM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"DIOR FAHRENHEIT EAU DE TOILETTE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"LACOSTE L.12.12 JAUNE OPTIMISTIC", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"PACO RABANNE INVICTUS LEGEND", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"DIOR J'ADORE BLACK EAU DE PARFUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"VICTORIA'S SECRET VERY SEXY NIGHT EAU DE PARFUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"BLACK OPIUM LE PARFUM", image:"", price:"XX €", quantity:"90 ml", gender:""},
+
+      {name:"212 VIP BLACK CAROLINA HERRERA", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"GUCCI BLOOM NETTARE DI FLORI", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"PACO RABANNE PURE XS", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"BVLGARI AQVA", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"CAROLINA HERRERA GOOD GIRL GOLD", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"CAROLINA HERRERA GOOD GIRL", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"VERSACE EROS FLAME", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"BVLGARI OMNIA", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"YSL LIBRE INTENSSE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"PACO RABBANE INVICTUS PERFUM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"PACO RABANNE OLYMPEA", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"SCANDAL JEAN PAUL", image:"", price:"XX €", quantity:"YY ml", gender:""},
+
+      {name:"PACO RABANNE LADY MILLION", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"PACO RABANNE LADY MILLION FABULOUS", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"CAROLINA HERRERA GOOD GIRL DAZZLING GARDEN", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"GIORGIO ARMANI CODE PROFUMO PERFUM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"TOMMY HILFIGER TOMMY NOW", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"TOMFORT VELVET ORCHID LUMIERE", image:"", price:"XX €", quantity:"80 ml", gender:""},
+       
+      {name:"GUCCI BLOOM INTENSE", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"BVULGARI SPLENDIDA", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"MY WAY PARFUM", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"VERSACE BRIGHT CRYSTAL", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"DOLCE & GABBANA QUEEN EAU DE PARFUM", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"MIRACLE EAU DE PARFUM", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"PACO RABANNE PHANTOM", image:"", price:"XX €", quantity:"YY ml", gender:""},
+      {name:"LANCÔME IDÔLE LE PARFUM", image:"", price:"XX €", quantity:"75 ml", gender:""},
+      {name:"VERSACE EROS", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"DIOR J'ADORE EAU DE PARFUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"GUCCI FLORA", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"GIORGIO ARMANI ACQUA DI GIÒ EAU DE TOILETTE", image:"", price:"XX €", quantity:"100 ml", gender:""},
+
+      {name:"MOSCHINO TOY 2 BUBBLE GUM", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"PACO RABANNE INVICTUS VICTORY", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"YARA", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"GOOD GIRL BLUSH", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"LADY MILLÓN LUCKY", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"MOSCHINO TOY BOY", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"BOSS ALIVE", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"BLACK XS BLANEXGESS", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"MOSCHINO TOY 2", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"ERBA PURA", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      {name:"MARC JACOBS DAISY", image:"", price:"XX €", quantity:"80 ml", gender:""},
+      {name:"BVLGARI OMNIA CORAL", image:"", price:"XX €", quantity:"80 ml", gender:""},
+
+      {name:"LACOSTE L.12.12 ROSE", image:"", price:"XX €", quantity:"100 ml", gender:""},
+      
+
+      
+    ];
+
+    const grid = document.getElementById("grid");
+    const search = document.getElementById("search");
+
+    function render(list){
+      grid.innerHTML="";
+      list.forEach(p=>{
+        const c=document.createElement("div");
+        c.className="card";
+        c.innerHTML=`
+          <div class="thumb"><img src="${p.image}" alt="${p.name}"/></div>
+          <div class="name">${p.name}</div>
+          <div class="price">${p.price}</div>
+          <div class="meta">Quantitat: ${p.quantity} | Gènere: ${p.gender||"-"}</div>
+        `;
+        grid.appendChild(c);
+      });
+    }
+
+    function filter(){
+      const q=search.value.toLowerCase();
+      render(products.filter(p=>p.name.toLowerCase().includes(q)));
+    }
+
+    search.addEventListener("input",filter);
+
+    render(products);
+  </script>
+</body>
+</html>
